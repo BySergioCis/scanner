@@ -7,7 +7,7 @@
  * 2. Copia este código en el editor
  * 3. Crea un Google Sheet con dos hojas (pestañas):
  *    - "login": Columnas zona, ruta, usuario, contraseña
- *    - "base": Columnas Fecha, Codigo, Usuario
+ *    - "base": Columnas Fecha, Zona, Ruta, IMEI
  * 4. Asocia el script al Sheet: Recursos > Proyecto de Google Cloud > (selecciona tu sheet)
  * 5. Despliega como aplicación web:
  *    - Publicar > Implementar como aplicación web
@@ -42,8 +42,10 @@ function doGet(e) {
  * 
  * @param {Object} e - Parámetros de la petición
  * @param {string} e.param.accion - "guardar"
- * @param {string} e.param.codigo - Código de barras escaneado
+ * @param {string} e.param.codigo - Código de barras escaneado (IMEI)
  * @param {string} e.param.usuario - Usuario que escaneó
+ * @param {string} e.param.zona - Zona del usuario (opcional)
+ * @param {string} e.param.ruta - Ruta del usuario (opcional)
  */
 function doPost(e) {
   return handleRequest(e, 'POST');
@@ -61,7 +63,13 @@ function handleRequest(e, method) {
     if (method === 'GET' && accion === 'login') {
       return verificarLogin(params.usuario, params.password, callback);
     } else if (method === 'POST' && accion === 'guardar') {
-      return guardarCodigo(params.codigo, params.usuario, callback);
+      return guardarCodigo(
+        params.codigo, 
+        params.usuario, 
+        params.zona, 
+        params.ruta, 
+        callback
+      );
     } else {
       return responderJSON({ error: true, mensaje: 'Acción no válida' }, 400, callback);
     }
@@ -130,9 +138,10 @@ function verificarLogin(usuario, password, callback) {
 }
 
 /**
- * Guarda un código de barras en la hoja "Codigos"
+ * Guarda un código de barras en la hoja "base"
+ * Columnas: A:Fecha, B:Zona, C:Ruta, D:IMEI
  */
-function guardarCodigo(codigo, usuario, callback) {
+function guardarCodigo(codigo, usuario, zona, ruta, callback) {
   if (!codigo) {
     return responderJSON({ error: true, mensaje: 'Código de barras es requerido' }, 400, callback);
   }
@@ -149,7 +158,16 @@ function guardarCodigo(codigo, usuario, callback) {
   const fecha = new Date();
   const fechaFormateada = Utilities.formatDate(fecha, Session.getScriptTimeZone(), 'dd/MM/yyyy HH:mm:ss');
   
-  sheet.appendRow([fechaFormateada, codigo.toString().trim(), usuario || 'Desconocido']);
+  // Estructura solicitada: [Fecha, Zona, Ruta, IMEI]
+  // Aseguramos que los valores no sean nulos para evitar desplazamientos
+  const nuevaFila = [
+    fechaFormateada,
+    zona || '',
+    ruta || '',
+    codigo.toString().trim()
+  ];
+  
+  sheet.appendRow(nuevaFila);
   
   return responderJSON({ 
     error: false, 
@@ -157,7 +175,9 @@ function guardarCodigo(codigo, usuario, callback) {
     mensaje: 'Código guardado exitosamente',
     datos: {
       fecha: fechaFormateada,
-      codigo: codigo.toString().trim(),
+      zona: zona || '',
+      ruta: ruta || '',
+      imei: codigo.toString().trim(),
       usuario: usuario || 'Desconocido'
     }
   }, 200, callback);
