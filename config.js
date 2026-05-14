@@ -10,7 +10,7 @@
  */
 
 // ★★★ CAMBIA ESTA URL POR LA DE TU APLICACIÓN WEB DE Google Apps Script ★★★
-const APP_URL = "https://script.google.com/macros/s/AKfycbwoDKD0bU8VeYuzycrfZ8dMFPAmmT7WZROzpWDGJEt4sdyQU7y5pI_alxadc0P1L1Ls/exec";
+const APP_URL = "https://script.google.com/macros/s/AKfycbwfPt35Gq2yjrEOSkCMJsMeFrFpzsGjdN1sZ64qf_dkc2CTvv403iJMPg6QXft5lDU/exec";
 
 // Nombres de las pestañas del spreadsheet
 const HOJA_USUARIOS = "login";
