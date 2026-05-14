@@ -13,6 +13,8 @@
 // =============================================
 const state = {
   usuario: null,
+  zona: null,
+  ruta: null,
   ultimoCodigo: null,
   escaneando: false,
   html5QrCode: null
@@ -223,7 +225,9 @@ async function handleLogin(e) {
     }, 'GET');
 
     if (respuesta && respuesta.success === true) {
-      state.usuario = usuario;
+      state.usuario = respuesta.usuario || usuario;
+      state.zona = respuesta.zona || '';
+      state.ruta = respuesta.ruta || '';
       mostrarPantallaScanner();
     } else {
       mostrarAlerta('error', 
@@ -444,7 +448,9 @@ async function guardarCodigo() {
     const respuesta = await llamarAPI({
       accion: 'guardar',
       codigo: state.ultimoCodigo,
-      usuario: state.usuario
+      usuario: state.usuario,
+      zona: state.zona,
+      ruta: state.ruta
     }, 'POST');
 
     if (respuesta && respuesta.success === true) {
