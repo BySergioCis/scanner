@@ -1,0 +1,381 @@
+/* =============================================
+   ESTILOS - Lector de Código de Barras
+   ============================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+/* ========== LOGIN ========== */
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-header .icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.login-header h1 {
+  color: #333;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.login-header p {
+  color: #888;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #555;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  outline: none;
+  background: #f8f9fa;
+}
+
+.form-group input:focus {
+  border-color: #667eea;
+  background: white;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  color: white;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(17, 153, 142, 0.4);
+}
+
+.btn-success:active {
+  transform: translateY(0);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #eb3349, #f45c43);
+  color: white;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(235, 51, 73, 0.4);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ========== SCANNER ========== */
+.scanner-section {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.scanner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.scanner-header h2 {
+  color: #333;
+  font-size: 20px;
+}
+
+.user-badge {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#reader {
+  border: 3px dashed #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  margin-bottom: 15px;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#reader video {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+.result-box {
+  background: #f8f9fa;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.result-box .label {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.result-box .codigo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  word-break: break-all;
+  font-family: 'Courier New', monospace;
+}
+
+.result-box .fecha {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 6px;
+}
+
+.alert {
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  display: none;
+}
+
+.alert-success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  display: block;
+}
+
+.alert-error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  display: block;
+}
+
+.alert-info {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+  display: block;
+}
+
+/* ========== SCANNER ACTIONS ========== */
+.scanner-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.scanner-actions .btn {
+  flex: 1;
+  padding: 12px;
+  font-size: 14px;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: none;
+}
+
+.btn.loading .spinner {
+  display: inline-block;
+}
+
+.btn.loading .btn-text {
+  display: none;
+}
+
+/* ========== SCANNER STATUS ========== */
+.scanner-status {
+  text-align: center;
+  padding: 10px;
+  color: #888;
+  font-size: 13px;
+}
+
+.scanner-status .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: pulse 1.5s infinite;
+}
+
+.dot-active {
+  background: #38ef7d;
+}
+
+.dot-inactive {
+  background: #ccc;
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 520px) {
+  .container {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .login-header h1 {
+    font-size: 20px;
+  }
+
+  #reader {
+    min-height: 220px;
+  }
+
+  .result-box .codigo {
+    font-size: 18px;
+  }
+
+  .scanner-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    padding: 15px;
+  }
+
+  .scanner-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Lector de Código de Barras</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Librería html5-qrcode para escaneo desde cámara -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- ============ SECCIÓN DE LOGIN ============ -->
+    <div id="loginSection">
+      <div class="login-header">
+        <div class="icon">📷</div>
+        <h1>Lector de Códigos</h1>
+        <p>Inicia sesión para comenzar a escanear</p>
+      </div>
+
+      <div id="loginAlert" class="alert"></div>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label for="usuario">👤 Usuario</label>
+          <input type="text" id="usuario" placeholder="Ingresa tu usuario" required autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label for="password">🔒 Contraseña</label>
+          <input type="password" id="password" placeholder="Ingresa tu contraseña" required autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-primary" id="btnLogin">
+          <span class="btn-text">Iniciar Sesión</span>
+          <div class="spinner"></div>
+        </button>
+      </form>
+    </div>
+
+    <!-- ============ SECCIÓN DE ESCÁNER ============ -->
+    <div id="scannerSection" class="scanner-section">
+      <div class="scanner-header">
+        <h2>📷 Escáner</h2>
+        <span id="userBadge" class="user-badge"></span>
+      </div>
+
+      <div id="scannerAlert" class="alert"></div>
+
+      <!-- Contenedor del escáner -->
+      <div id="reader"></div>
+
+      <!-- Resultado del último escaneo -->
+      <div id="resultBox" class="result-box" style="display:none;">
+        <div class="label">Último código escaneado</div>
+        <div id="codigoDisplay" class="codigo">-</div>
+        <div id="fechaDisplay" class="fecha"></div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="scanner-actions">
+        <button class="btn btn-success" id="btnGuardar">
+          <span class="btn-text">💾 Guardar Código</span>
+          <div class="spinner"></div>
+        </button>
+        <button class="btn btn-outline" id="btnReescanear">🔄 Re-escanear</button>
+      </div>
+
+      <div class="scanner-status">
+        <span id="statusDot" class="dot dot-inactive"></span>
+        <span id="statusText">Cámara desactivada</span>
+      </div>
+
+      <button class="btn btn-danger" id="btnCerrarSesion" style="margin-top: 15px;">
+        🔓 Cerrar Sesión
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Script principal -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
